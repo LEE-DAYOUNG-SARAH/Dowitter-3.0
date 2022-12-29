@@ -1,0 +1,30 @@
+spring:
+  # devtools
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false # 개발환경 = false / 운영환경 = true
+  # h2
+  h2:
+    console:
+      enabled: true
+  # db
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+# mybatis
+mybatis:
+  configuration:
+    multiple-result-sets-enabled: false
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true # result가 Map인 경우 필드값이 null이면 저장x => 저장되도록 설정
+    jdbc-type-for-null: NULL # 파라미터가 널인 경우, 오류방지
+    default-fetch-size: 500 # 기본값: 10, 한번에 조회하는 결과수 (속도와 밀접한 관련)
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.example.dowitter # parameterType, resultType에서 아래의 패키지에서 클래스명으로 타입 지정
