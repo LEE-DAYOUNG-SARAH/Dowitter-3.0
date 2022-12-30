@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dowitter.DowitterRepository">
+
+    <select id="findDocList" resultType="DocForm">
+        SELECT A.uid
+             , A.member_uid
+             , A.content
+             , A.reg_datetime
+             , B.user_id
+        FROM DOC A
+        INNER JOIN MEMBER B
+            on A.MEMBER_UID = B.UID
+        ORDER BY A.uid DESC
+    </select>
+</mapper>

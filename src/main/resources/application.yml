@@ -17,6 +17,10 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  # sql
+  sql:
+    init:
+      mode: always
 
 # mybatis
 mybatis:
@@ -26,5 +30,5 @@ mybatis:
     call-setters-on-nulls: true # result가 Map인 경우 필드값이 null이면 저장x => 저장되도록 설정
     jdbc-type-for-null: NULL # 파라미터가 널인 경우, 오류방지
     default-fetch-size: 500 # 기본값: 10, 한번에 조회하는 결과수 (속도와 밀접한 관련)
-  mapper-locations: classpath:mybatis/mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.dowitter # parameterType, resultType에서 아래의 패키지에서 클래스명으로 타입 지정
