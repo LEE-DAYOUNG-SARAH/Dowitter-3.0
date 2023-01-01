@@ -1,4 +1,4 @@
-package com.example.dowitter.mybatis;
+package com.example.dowitter;
 
 import lombok.Data;
 

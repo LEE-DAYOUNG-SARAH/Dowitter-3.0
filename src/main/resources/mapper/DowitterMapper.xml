@@ -13,4 +13,13 @@
             on A.MEMBER_UID = B.UID
         ORDER BY A.uid DESC
     </select>
+
+    <select id="findMember" parameterType="LoginForm" resultType="MemberVO">
+        SELECT uid
+             , user_id
+             , password
+          FROM MEMBER
+        WHERE user_id = #{userId}
+          AND password = #{password}
+    </select>
 </mapper>

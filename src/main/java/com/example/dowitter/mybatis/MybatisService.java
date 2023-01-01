@@ -1,5 +1,6 @@
 package com.example.dowitter.mybatis;
 
+import com.example.dowitter.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

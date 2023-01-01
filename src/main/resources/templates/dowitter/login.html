@@ -19,29 +19,35 @@
 </header>
 <div id="wrap">
   <div class="contentBox contentBoxLogin">
-    <form action="">
+    <form action="/login" method="post" th:object="${loginForm}">
       <div id="content" class="contentLogin">
         <div class="title">로그인</div>
+        <div th:if="${#fields.hasGlobalErrors()}">
+          <p class="field-error" th:each="err : ${#fields.globalErrors()}" >전체 오류 메시지</p>
+        </div>
         <div class="row">
           <div class="inputBox">
             <label for="idInput">ID</label>
-            <input type="text" id="idInput" name="id" title="ID" />
+            <input type="text" id="idInput"th:field="*{userId}"
+                   th:errorclass="field-error" title="ID" />
+            <div class="field-error" th:errors="*{userId}" />
           </div>
         </div>
         <div class="row">
           <div class="inputBox">
             <label for="pwInput">PW</label>
-            <input type="password" id="pwInput" name="pw" title="PASSWORD"/>
+            <input type="password" id="pwInput" th:field="*{password}"
+                   th:errorclass="field-error" title="PASSWORD"/>
+            <div class="field-error" th:errors="*{password}" />
           </div>
         </div>
         <div class="btns alone">
-          <div class="confirm">
+          <button class="confirm">
             로그인
-            <input id="confirmButton" type="button" />
-          </div>
+          </button>
         </div>
         <div class="textButton">
-          <a href="join.do">회원가입</a>
+          <a href="/join">회원가입</a>
         </div>
       </div>
     </form>
