@@ -14,7 +14,7 @@
         ORDER BY A.uid DESC
     </select>
 
-    <select id="findMember" parameterType="LoginForm" resultType="MemberVO">
+    <select id="findMemberForLogin" parameterType="LoginForm" resultType="MemberVO">
         SELECT uid
              , user_id
              , password
@@ -30,6 +30,32 @@
         ) VALUES (
             #{userId}
           , #{password}
+        )
+    </insert>
+
+    <select id="findMemberByUid" resultType="MemberVO">
+        SELECT uid
+             , user_id
+             , password
+         FROM MEMBER
+        WHERE uid = #{uid}
+    </select>
+
+    <update id="updateMember" parameterType="ModifyMemberForm">
+        UPDATE MEMBER
+           SET password = #{password}
+         WHERE uid = #{uid}
+    </update>
+
+    <insert id="insertDoc" parameterType="WriteForm">
+        INSERT INTO DOC (
+            member_uid
+          , content
+          , reg_datetime
+        ) VALUES (
+            #{memberUid}
+          , #{content}
+          , NOW()
         )
     </insert>
 </mapper>

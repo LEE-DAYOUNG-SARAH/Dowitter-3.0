@@ -1,8 +1,6 @@
 package com.example.dowitter;
 
-import com.example.dowitter.Form.DocForm;
-import com.example.dowitter.Form.JoinForm;
-import com.example.dowitter.Form.LoginForm;
+import com.example.dowitter.Form.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,7 +9,13 @@ import java.util.List;
 public interface DowitterRepository {
     List<DocForm> findDocList();
 
-    MemberVO findMember(LoginForm loginForm);
+    MemberVO findMemberForLogin(LoginForm loginForm);
 
     int insertMember(JoinForm joinForm);
+
+    MemberVO findMemberByUid(Long uid);
+
+    int updateMember(ModifyMemberForm modifyMemberForm);
+
+    int insertDoc(WriteForm writeForm);
 }

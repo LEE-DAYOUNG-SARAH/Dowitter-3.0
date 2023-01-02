@@ -1,14 +1,14 @@
 package com.example.dowitter;
 
-import com.example.dowitter.Form.DocForm;
-import com.example.dowitter.Form.JoinForm;
-import com.example.dowitter.Form.LoginForm;
+import com.example.dowitter.Form.*;
 import com.example.dowitter.common.exception.UnMatchPasswordException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -20,10 +20,11 @@ public class DowitterService {
         return dowitterRepository.findDocList();
     }
 
-    public MemberVO getMember(LoginForm loginForm) {
-        return dowitterRepository.findMember(loginForm);
+    public MemberVO getMemberForLogin(LoginForm loginForm) {
+        return dowitterRepository.findMemberForLogin(loginForm);
     }
 
+    @Transactional
     public void joinMember(JoinForm joinForm) {
         // 비밀번호 확인
         String password = joinForm.getPassword();
@@ -42,4 +43,36 @@ public class DowitterService {
 
     }
 
+    public List<DocForm> getFeedList(Long uid) {
+        return getDocList().stream()
+                .filter(docForm -> docForm.getUid().equals(uid))
+                .collect(Collectors.toList());
+    }
+
+    public MemberVO getMemberByUid(Long uid) {
+        return dowitterRepository.findMemberByUid(uid);
+    }
+
+    @Transactional
+    public void modifyMember(ModifyMemberForm modifyMemberForm) {
+        // 비밀번호 유효성 검증
+        String password = modifyMemberForm.getPassword();
+        String rePassword = modifyMemberForm.getRePassword();
+
+        if( !password.equals(rePassword) ) {
+            throw new UnMatchPasswordException();
+        }
+
+        int countOfUpdateRow = dowitterRepository.updateMember(modifyMemberForm);
+        if( countOfUpdateRow != 1 ) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void writeDoc(WriteForm writeForm) {
+        int countOfInsertRow = dowitterRepository.insertDoc(writeForm);
+        if( countOfInsertRow != 1 ) {
+            throw new RuntimeException();
+        }
+    }
 }

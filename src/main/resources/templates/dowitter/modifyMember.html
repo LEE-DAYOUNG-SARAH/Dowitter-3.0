@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>회원정보 수정</title>
+</head>
+<script></script>
+<body>
+<header>
+  <section id="headerArea">
+    <a href="/timeline" class="logo">
+      <img th:src="@{/img/dowitter.png}" alt="로고" />
+    </a>
+  </section>
+</header>
+<div id="wrap">
+  <div class="contentBox contentBoxModify">
+    <form action="/modifyMember" method="post" th:object="${modifyMemberForm}">
+      <input type="hidden" th:field="*{uid}"/>
+      <div id="content" class="contentModify">
+        <div class="title">회원정보 수정</div>
+        <div th:if="${#fields.hasGlobalErrors()}">
+          <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+        <div class="row">
+          <div class="inputBox">
+            <label for="idInput">ID</label>
+            <input type="text" id="idInput" th:field="*{userId}" title="ID" readonly="readonly"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="inputBox">
+            <label for="pwInput">PW</label>
+            <input type="password" id="pwInput" th:field="*{password}" title="PASSWORD" />
+            <div class="field-error" th:errors="*{rePassword}" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="inputBox">
+            <label for="pwInput">RE</label>
+            <input type="password" id="reInput" th:field="*{rePassword}" title="RETRY" />
+            <div class="field-error" th:errors="*{rePassword}" />
+          </div>
+        </div>
+        <div class="btns">
+          <button class="confirm">
+            저장
+          </button>
+          <div class="cancel">
+            <a href="/myFeed">취소</a>
+          </div>
+        </div>
+        <div class="withdraw" onclick="document.getElementById('withdrawButton').click()">
+          회원 탈퇴
+          <input id="withdrawButton" type="button" onclick="doWhat(this.form, 'withdraw.do')"  />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
