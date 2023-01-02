@@ -22,4 +22,14 @@
         WHERE user_id = #{userId}
           AND password = #{password}
     </select>
+
+    <insert id="insertMember" parameterType="JoinForm">
+        INSERT INTO MEMBER (
+            user_id
+          , password
+        ) VALUES (
+            #{userId}
+          , #{password}
+        )
+    </insert>
 </mapper>

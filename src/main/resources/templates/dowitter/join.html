@@ -3,10 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>로그인</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>회원가입</title>
 </head>
 <script></script>
 <body>
@@ -18,40 +18,43 @@
   </section>
 </header>
 <div id="wrap">
-  <div class="contentBox contentBoxLogin">
-    <form action="/login" method="post" th:object="${loginForm}">
-      <div id="content" class="contentLogin">
-        <div class="title">로그인</div>
+  <div class="contentBox contentBoxJoin">
+    <form action="/join" method="post" th:object="${joinForm}">
+      <div id="content" class="contentJoin">
+        <div class="title">회원가입</div>
         <div th:if="${#fields.hasGlobalErrors()}">
           <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
         </div>
         <div class="row">
           <div class="inputBox">
             <label for="idInput">ID</label>
-            <input type="text" id="idInput"th:field="*{userId}"
-                   th:errorclass="field-error" title="ID" />
+            <input type="text" id="idInput" th:field="*{userId}" title="ID" />
             <div class="field-error" th:errors="*{userId}" />
           </div>
         </div>
         <div class="row">
           <div class="inputBox">
             <label for="pwInput">PW</label>
-            <input type="password" id="pwInput" th:field="*{password}"
-                   th:errorclass="field-error" title="PASSWORD"/>
+            <input type="password" id="pwInput" th:field="*{password}" title="PASSWORD" />
             <div class="field-error" th:errors="*{password}" />
           </div>
         </div>
-        <div class="btns alone">
-          <button class="confirm">
-            로그인
-          </button>
+        <div class="row">
+          <div class="inputBox">
+            <label for="reInput">RE</label>
+            <input type="password" id="reInput" th:field="*{rePassword}" title="RETRY" />
+            <div class="field-error" th:errors="*{rePassword}" />
+          </div>
         </div>
-        <div class="textButton">
-          <a href="/join">회원가입</a>
+        <div class="btns">
+          <button class="confirm">
+            회원가입
+          </button>
+          <div class="cancel">
+            <a href="/login">취소</a>
+          </div>
         </div>
       </div>
     </form>
   </div>
 </div>
-</body>
-</html>

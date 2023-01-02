@@ -20,7 +20,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public static final List loginEssential =
             Arrays.asList("/**");
     public static final List loginInessential =
-            Arrays.asList("/css/**", "/img/**", "/favicon.ico/**", "/login", "/error");
+            Arrays.asList("/css/**", "/img/**", "/favicon.ico/**",  // 정적 리소스
+                            "/login",   // 로그인
+                            "/join",    // 회원가입
+                            "/error");  // 에러
 
 
     @Override

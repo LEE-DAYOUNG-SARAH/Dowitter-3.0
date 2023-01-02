@@ -1,8 +1,10 @@
 package com.example.dowitter;
 
 import com.example.dowitter.Form.DocForm;
+import com.example.dowitter.Form.JoinForm;
 import com.example.dowitter.Form.LoginForm;
 import com.example.dowitter.common.constants.SessionConstant;
+import com.example.dowitter.common.exception.UnMatchPasswordException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,6 @@ import java.util.List;
 @Controller
 @Slf4j
 public class DowitterController {
-
     private final DowitterService dowitterService;
 
     @GetMapping("/login")
@@ -37,11 +38,6 @@ public class DowitterController {
                         HttpSession session) {
         // 로그인 유효성 검증
         if(bindingResult.hasErrors()) {
-            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-            for (FieldError fieldError : fieldErrors) {
-                log.info(fieldError.getField());
-                log.info(fieldError.getDefaultMessage());
-            }
             return "dowitter/login";
         }
 
@@ -49,6 +45,7 @@ public class DowitterController {
         MemberVO memberVO = dowitterService.getMember(loginForm);
         // 조회된 회원이 없는 경우
         if( memberVO == null ) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "dowitter/login";
         }
 
@@ -58,7 +55,7 @@ public class DowitterController {
         return "redirect:/timeline";
     }
 
-    @RequestMapping("/timeline")
+    @GetMapping("/timeline")
     public String timeline(Model model) {
 
         // 게시글 리스트 조회
@@ -67,5 +64,30 @@ public class DowitterController {
 
         model.addAttribute("docList", docList);
         return "dowitter/timeline";
+    }
+
+    @GetMapping("/join")
+    public String joinForm(@ModelAttribute JoinForm joinForm) {
+        return "dowitter/join";
+    }
+
+    @PostMapping("/join")
+    public String join(@Validated @ModelAttribute JoinForm joinForm,
+                       BindingResult bindingResult) {
+        if( bindingResult.hasErrors()) {
+            return "dowitter/join";
+        }
+
+        try {
+            // 회원가입
+            dowitterService.joinMember(joinForm);
+        } catch (UnMatchPasswordException e) {
+            bindingResult.reject("unMatchPassword", "비밀번호가 동일하지 않습니다.");
+            return "dowitter/join";
+        } catch (Exception e) {
+            bindingResult.reject("error", "회원가입 도중 오류가 발생하였습니다.<br>다시 시도해주세요.");
+            return "dowitter/join";
+        }
+        return "redirect:/login";
     }
 }
