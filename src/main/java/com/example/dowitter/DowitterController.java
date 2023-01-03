@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -173,5 +174,45 @@ public class DowitterController {
         }
 
         return "redirect:/timeline";
+    }
+
+    @PostMapping("/modifyDocForm")
+    @ResponseBody
+    public DocForm modifyDocForm(Long uid) {
+        log.info("uid => {}", uid);
+
+        // 게시글 조회
+        DocForm doc = dowitterService.getDocList().stream()
+                .filter(docForm -> docForm.getUid().equals(uid))
+                .findFirst()
+                .orElseThrow();
+        return doc;
+    }
+
+    @PostMapping("/modifyDoc")
+    public String modifyDoc(@Validated @ModelAttribute ModifyDocForm modifyDocForm,
+                            BindingResult bindingResult) {
+        if( bindingResult.hasErrors() ) {
+            return "error";
+        }
+
+        try {
+            // 게시글 수정
+            dowitterService.modifyDoc(modifyDocForm);
+        } catch (Exception e) {
+            return "error";
+        }
+
+        return "redirect:/timeline";
+    }
+
+    @PostMapping("/deleteDoc")
+    @ResponseBody
+    public void deleteDoc(Long uid) {
+        try {
+            dowitterService.deleteDoc(uid);
+        } catch (Exception e) {
+          log.info("{}", e);
+        }
     }
 }

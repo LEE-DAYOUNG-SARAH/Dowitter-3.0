@@ -75,4 +75,18 @@ public class DowitterService {
             throw new RuntimeException();
         }
     }
+
+    public void modifyDoc(ModifyDocForm modifyDocForm) {
+        int countOfUpdateRow = dowitterRepository.updateDoc(modifyDocForm);
+        if( countOfUpdateRow != 1 ) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void deleteDoc(Long uid) {
+        int countOfDeleteRow = dowitterRepository.deleteDoc(uid);
+        if( countOfDeleteRow != 1 ) {
+            throw new RuntimeException();
+        }
+    }
 }

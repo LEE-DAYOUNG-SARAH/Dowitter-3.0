@@ -58,4 +58,15 @@
           , NOW()
         )
     </insert>
+
+    <update id="updateDoc" parameterType="ModifyDocForm">
+        UPDATE DOC
+           SET content = #{content}
+         WHERE uid = #{uid}
+    </update>
+
+    <delete id="deleteDoc">
+        DELETE FROM DOC
+        WHERE uid = #{uid}
+    </delete>
 </mapper>

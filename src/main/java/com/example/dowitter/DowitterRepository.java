@@ -18,4 +18,8 @@ public interface DowitterRepository {
     int updateMember(ModifyMemberForm modifyMemberForm);
 
     int insertDoc(WriteForm writeForm);
+
+    int updateDoc(ModifyDocForm modifyDocForm);
+
+    int deleteDoc(Long uid);
 }

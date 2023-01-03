@@ -46,11 +46,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 로그인한 멤버
         MemberVO loginMember = (MemberVO) session.getAttribute(SessionConstant.LOGIN_MEMBER);
 
-        if( loginMember != null ) {
+        if( loginMember != null && modelAndView != null ) {
             loginMember.setPassword(null);
             modelAndView.addObject("loginMember", loginMember);
+            log.info(modelAndView.getViewName());
         }
-        log.info(modelAndView.getViewName());
+
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
