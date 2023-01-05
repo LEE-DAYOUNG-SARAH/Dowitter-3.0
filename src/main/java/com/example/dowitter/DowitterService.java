@@ -45,7 +45,7 @@ public class DowitterService {
 
     public List<DocForm> getFeedList(Long uid) {
         return getDocList().stream()
-                .filter(docForm -> docForm.getUid().equals(uid))
+                .filter(docForm -> docForm.getMemberUid().equals(uid))
                 .collect(Collectors.toList());
     }
 
@@ -85,6 +85,13 @@ public class DowitterService {
 
     public void deleteDoc(Long uid) {
         int countOfDeleteRow = dowitterRepository.deleteDoc(uid);
+        if( countOfDeleteRow != 1 ) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void withdrawal(Long uid) {
+        int countOfDeleteRow = dowitterRepository.deleteMember(uid);
         if( countOfDeleteRow != 1 ) {
             throw new RuntimeException();
         }

@@ -32,12 +32,11 @@
       url: "/deleteDoc", // 호출할 주소
       method: "POST",
       data: { "uid" : uid }, // 넘길 데이터
-      dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
       success: function() { // 결과 받기
         window.location.reload();
       },
-      error: function () {
-        console.log("에러");
+      error: function (e) {
+        console.log(e);
       }
     });
   }
@@ -108,7 +107,7 @@
                   <a class="feedId" th:href="@{/feed/{uid}(uid=${doc.memberUid})}">@[[${doc.userId}]]</a>
                   <span class="feedDate" th:text="${#dates.format(doc.regDatetime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                 </div>
-                <div class="feedContent">[[${doc.content}]]</div>
+                <div style="white-space:pre;" class="feedContent">[[${doc.content}]]</div>
                 <th:block th:if="${doc.memberUid eq loginMember.uid}">
                   <div class="feedBtns">
                     <div class="feedModify"
@@ -135,7 +134,7 @@
 <div id="modifierWrap">
   <div class="modifier">
     <div class="modifyWindow">
-      <form action="/modifyDoc" method="post">
+      <form action="/modifyDocForTimeline" method="post">
         <input type="hidden" name="uid"/>
         <div class="writeFeed">
           <textarea name="content" id="layerContent" placeholder="아무말이나 적어보세요..!"></textarea>

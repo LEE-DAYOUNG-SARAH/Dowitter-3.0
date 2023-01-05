@@ -22,4 +22,6 @@ public interface DowitterRepository {
     int updateDoc(ModifyDocForm modifyDocForm);
 
     int deleteDoc(Long uid);
+
+    int deleteMember(Long uid);
 }

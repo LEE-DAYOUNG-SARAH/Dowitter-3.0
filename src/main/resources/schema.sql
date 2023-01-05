@@ -15,4 +15,6 @@ CREATE TABLE DOC (
                      reg_datetime TIMESTAMP not null default now(),
                      primary key (uid),
                      foreign key (member_uid) references member(uid)
+                     on delete cascade
 );
+

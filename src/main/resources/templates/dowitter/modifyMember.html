@@ -51,12 +51,11 @@
             저장
           </button>
           <div class="cancel">
-            <a href="/myFeed">취소</a>
+            <a th:href="@{/feed/{uid}(uid=${loginMember.uid})}">취소</a>
           </div>
         </div>
-        <div class="withdraw" onclick="document.getElementById('withdrawButton').click()">
+        <div class="withdraw" onclick="location.href='/withdrawal'">
           회원 탈퇴
-          <input id="withdrawButton" type="button" onclick="doWhat(this.form, 'withdraw.do')"  />
         </div>
       </div>
     </form>

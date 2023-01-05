@@ -69,4 +69,9 @@
         DELETE FROM DOC
         WHERE uid = #{uid}
     </delete>
+
+    <delete id="deleteMember">
+        DELETE FROM MEMBER
+        WHERE uid = #{uid}
+    </delete>
 </mapper>

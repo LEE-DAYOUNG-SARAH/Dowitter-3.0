@@ -8,17 +8,53 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>피드</title>
 </head>
-<script></script>
+<script>
+    const fnShowModify = (uid) => {
+        $.ajax({
+            url: "/modifyDocForm", // 호출할 주소
+            method: "POST",
+            data: {"uid": uid}, // 넘길 데이터
+            dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
+            success: function (data) { // 결과 받기
+                $("input[name='uid']").val(data.uid);
+                $("#layerContent").val(data.content);
+                $("#modifierWrap").addClass("show");
+                $("#layerContent").focus();
+            },
+            error: function () {
+                console.log("에러");
+            }
+        });
+    }
+
+    const fnDeleteDoc = (uid) => {
+        $.ajax({
+            url: "/deleteDoc", // 호출할 주소
+            method: "POST",
+            data: {"uid": uid}, // 넘길 데이터
+            success: function () { // 결과 받기
+                window.location.reload();
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+
+    const fnHideModify = () => {
+        $("#modifierWrap").removeClass("show");
+    }
+</script>
 <body>
 <section id="timelineHeader">
     <div class="safeArea">
         <a href="/timeline" class="logo">
-            <img th:src="@{/img/dowitter.png}" alt="로고" />
+            <img th:src="@{/img/dowitter.png}" alt="로고"/>
         </a>
         <div class="searchArea">
             <div class="inputArea">
                 <label for="">@</label>
-                <input type="text" id="search" placeholder="ID" />
+                <input type="text" id="search" placeholder="ID"/>
                 <ul class="selectUserArea">
                     <li class="searchedUser">
                         <a href="userID">
@@ -58,14 +94,14 @@
             </a>
         </div>
         <div class="myTimeline">
-            <form>
+            <form action="/feed/write" method="post" th:object="${writeForm}">
+                <input type="hidden" name="memberUid" th:value="${loginMember.uid}"/>
                 <div class="writeFeed">
-                    <textarea name="content" id="" cols="30" rows="10" placeholder="아무말이나 적어보세요..!"></textarea>
-                    <div class="write" onclick="document.getElementById('writeButton').click()">
+                    <textarea th:field="*{content}" cols="30" rows="10" placeholder="아무말이나 적어보세요..!"></textarea>
+                    <div class="field-error" th:errors="*{content}"/>
+                    <button class="write">
                         글쓰기
-                        <input type="button" id="writeButton" onclick="doWhat(this.form, 'insertDocF.do', true)" />
-                        <input type="hidden" name="id" value="${id}" />
-                    </div>
+                    </button>
                 </div>
             </form>
             <div class="readFeeds">
@@ -75,18 +111,25 @@
                             <form name="${doc.num}">
                                 <div class="feedTitle">
                                     <a class="feedId" href="">[[${feed.userId}]]</a>
-                                    <span class="feedDate" th:text="${#dates.format(feed.regDatetime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                    <span class="feedDate"
+                                          th:text="${#dates.format(feed.regDatetime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                 </div>
 
-                                <div class="feedContent">[[${feed.content}]]</div>
-                                <div th:if="${feedMember.uid eq loginMember.uid}" class="feedBtns">
-                                    <div class="feedModify" onclick="showModifier(${doc.num});">
-                                        수정
+                                <div style="white-space:pre;" class="feedContent">[[${feed.content}]]</div>
+                                <th:block th:if="${feed.memberUid eq loginMember.uid}">
+                                    <div class="feedBtns">
+                                        <div class="feedModify"
+                                             th:uid="${feed.uid}"
+                                             th:onclick="fnShowModify(this.getAttribute('uid'))">
+                                            수정
+                                        </div>
+                                        <div class="feedDelete"
+                                             th:uid="${feed.uid}"
+                                             th:onclick="fnDeleteDoc(this.getAttribute('uid'))">
+                                            삭제
+                                        </div>
                                     </div>
-                                    <div class="feedDelete" onclick="document.getElementById('feedDeleteButton').click()">
-                                        삭제
-                                    </div>
-                                </div>
+                                </th:block>
                             </form>
                         </li>
                     </th:block>
@@ -96,21 +139,19 @@
         </div>
     </section>
 </div>
-<div id="modifierWrap">
+<<div id="modifierWrap">
     <div class="modifier">
         <div class="modifyWindow">
-            <form>
-                <input type="hidden" name="num" />
-                <input type="hidden" name="id" value="${id}" />
+            <form action="/modifyDocForFeed" method="post">
+                <input type="hidden" name="uid"/>
                 <div class="writeFeed">
-                    <textarea name="content" placeholder="아무말이나 적어보세요..!"></textarea>
-                    <div class="cancelModify" onclick="hideModifier()">
+                    <textarea name="content" id="layerContent" placeholder="아무말이나 적어보세요..!"></textarea>
+                    <div class="cancelModify" onclick="fnHideModify()">
                         취소
                     </div>
-                    <div class="modify" onclick="document.getElementById('modifyButton2').click()">
+                    <button class="modify">
                         수정
-                        <input type="button" id="modifyButton2" onclick="doWhat(this.form, 'updateDocF.do',true)" />
-                    </div>
+                    </button>
                 </div>
             </form>
         </div>

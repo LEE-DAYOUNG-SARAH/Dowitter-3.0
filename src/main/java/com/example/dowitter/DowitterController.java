@@ -104,6 +104,7 @@ public class DowitterController {
 
     @GetMapping("/feed/{feedUid}")
     public String feedForm(@PathVariable("feedUid") Long feedUid,
+                           @ModelAttribute WriteForm writeForm,
                            Model model) {
 
         // 피드 회원 조회
@@ -159,7 +160,7 @@ public class DowitterController {
     }
 
     @PostMapping("/timeline/write")
-    public String writeDoc(@Validated @ModelAttribute WriteForm writeForm,
+    public String writeDocForTimeline(@Validated @ModelAttribute WriteForm writeForm,
                            BindingResult bindingResult) {
         if( bindingResult.hasErrors() ) {
             log.info("error => {}", bindingResult);
@@ -189,8 +190,8 @@ public class DowitterController {
         return doc;
     }
 
-    @PostMapping("/modifyDoc")
-    public String modifyDoc(@Validated @ModelAttribute ModifyDocForm modifyDocForm,
+    @PostMapping("/modifyDocForTimeline")
+    public String modifyDocForTimeline(@Validated @ModelAttribute ModifyDocForm modifyDocForm,
                             BindingResult bindingResult) {
         if( bindingResult.hasErrors() ) {
             return "error";
@@ -211,8 +212,68 @@ public class DowitterController {
     public void deleteDoc(Long uid) {
         try {
             dowitterService.deleteDoc(uid);
+            log.info("성공");
         } catch (Exception e) {
           log.info("{}", e);
         }
+    }
+
+    @PostMapping("/feed/write")
+    public String writeDocForFeed(@Validated @ModelAttribute WriteForm writeForm,
+                                  BindingResult bindingResult) {
+        if( bindingResult.hasErrors() ) {
+            log.info("error => {}", bindingResult);
+            return "dowitter/feed";
+        }
+
+        // doc 저장
+        try {
+            dowitterService.writeDoc(writeForm);
+        } catch (Exception e) {
+            return "error";
+        }
+
+        Long memberUid = writeForm.getMemberUid();
+
+        return "redirect:/feed/" + memberUid;
+    }
+
+    @PostMapping("/modifyDocForFeed")
+    public String modifyDocForFeed(@Validated @ModelAttribute ModifyDocForm modifyDocForm,
+                                   BindingResult bindingResult,
+                                   HttpSession session) {
+        if( bindingResult.hasErrors() ) {
+            return "error";
+        }
+
+        try {
+            // 게시글 수정
+            dowitterService.modifyDoc(modifyDocForm);
+        } catch (Exception e) {
+            return "error";
+        }
+
+        MemberVO member = (MemberVO) session.getAttribute(SessionConstant.LOGIN_MEMBER);
+        Long uid = member.getUid();
+
+        return "redirect:/feed/" + uid;
+    }
+
+    @GetMapping("/withdrawal")
+    public String withdrawal(HttpSession session) {
+
+        try {
+            MemberVO member = (MemberVO) session.getAttribute(SessionConstant.LOGIN_MEMBER);
+            Long uid = member.getUid();
+
+            // 회원탈퇴
+            dowitterService.withdrawal(uid);
+
+            session.invalidate();   // 세션 날
+        } catch (Exception e) {
+            return "error";
+        }
+
+        return "redirect:/login";
     }
 }
