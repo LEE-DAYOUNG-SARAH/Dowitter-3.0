@@ -27,20 +27,6 @@
         });
     }
 
-    const fnDeleteDoc = (uid) => {
-        $.ajax({
-            url: "/deleteDoc", // 호출할 주소
-            method: "POST",
-            data: {"uid": uid}, // 넘길 데이터
-            success: function () { // 결과 받기
-                window.location.reload();
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        });
-    }
-
     const fnHideModify = () => {
         $("#modifierWrap").removeClass("show");
     }
@@ -55,18 +41,6 @@
             <div class="inputArea">
                 <label for="">@</label>
                 <input type="text" id="search" placeholder="ID"/>
-                <ul class="selectUserArea">
-                    <li class="searchedUser">
-                        <a href="userID">
-                            @userA
-                        </a>
-                    </li>
-                    <li class="searchedUser">
-                        <a href="userID">
-                            @userB
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
         <div class="userArea">
@@ -94,7 +68,7 @@
             </a>
         </div>
         <div class="myTimeline">
-            <form action="/feed/write" method="post" th:object="${writeForm}">
+            <form action="/feed/doc/write" method="post" th:object="${writeForm}">
                 <input type="hidden" name="memberUid" th:value="${loginMember.uid}"/>
                 <div class="writeFeed">
                     <textarea th:field="*{content}" cols="30" rows="10" placeholder="아무말이나 적어보세요..!"></textarea>
@@ -124,8 +98,7 @@
                                             수정
                                         </div>
                                         <div class="feedDelete"
-                                             th:uid="${feed.uid}"
-                                             th:onclick="fnDeleteDoc(this.getAttribute('uid'))">
+                                             th:onclick="|location.href='@{/feed/doc/delete(uid=${feed.uid})}'|">
                                             삭제
                                         </div>
                                     </div>
@@ -142,7 +115,7 @@
 <<div id="modifierWrap">
     <div class="modifier">
         <div class="modifyWindow">
-            <form action="/modifyDocForFeed" method="post">
+            <form action="/feed/doc/modify" method="post">
                 <input type="hidden" name="uid"/>
                 <div class="writeFeed">
                     <textarea name="content" id="layerContent" placeholder="아무말이나 적어보세요..!"></textarea>

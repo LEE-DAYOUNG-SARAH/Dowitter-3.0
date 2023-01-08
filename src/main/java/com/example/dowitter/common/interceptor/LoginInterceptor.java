@@ -1,6 +1,6 @@
 package com.example.dowitter.common.interceptor;
 
-import com.example.dowitter.MemberVO;
+import com.example.dowitter.member.MemberVO;
 import com.example.dowitter.common.constants.SessionConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

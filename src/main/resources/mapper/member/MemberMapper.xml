@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.dowitter.DowitterRepository">
-
-    <select id="findDocList" resultType="DocForm">
-        SELECT A.uid
-             , A.member_uid
-             , A.content
-             , A.reg_datetime
-             , B.user_id
-        FROM DOC A
-        INNER JOIN MEMBER B
-            on A.MEMBER_UID = B.UID
-        ORDER BY A.uid DESC
-    </select>
+<mapper namespace="com.example.dowitter.member.MemberRepository">
 
     <select id="findMemberForLogin" parameterType="LoginForm" resultType="MemberVO">
         SELECT uid
@@ -46,29 +34,6 @@
            SET password = #{password}
          WHERE uid = #{uid}
     </update>
-
-    <insert id="insertDoc" parameterType="WriteForm">
-        INSERT INTO DOC (
-            member_uid
-          , content
-          , reg_datetime
-        ) VALUES (
-            #{memberUid}
-          , #{content}
-          , NOW()
-        )
-    </insert>
-
-    <update id="updateDoc" parameterType="ModifyDocForm">
-        UPDATE DOC
-           SET content = #{content}
-         WHERE uid = #{uid}
-    </update>
-
-    <delete id="deleteDoc">
-        DELETE FROM DOC
-        WHERE uid = #{uid}
-    </delete>
 
     <delete id="deleteMember">
         DELETE FROM MEMBER

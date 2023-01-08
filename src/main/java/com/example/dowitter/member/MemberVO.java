@@ -1,4 +1,4 @@
-package com.example.dowitter;
+package com.example.dowitter.member;
 
 import lombok.Data;
 
