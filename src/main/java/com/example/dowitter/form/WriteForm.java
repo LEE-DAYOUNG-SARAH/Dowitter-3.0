@@ -1,4 +1,4 @@
-package com.example.dowitter.Form;
+package com.example.dowitter.form;
 
 import lombok.Data;
 

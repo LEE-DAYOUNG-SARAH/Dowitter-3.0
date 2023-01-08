@@ -1,8 +1,8 @@
 package com.example.dowitter.doc;
 
-import com.example.dowitter.Form.DocForm;
-import com.example.dowitter.Form.ModifyDocForm;
-import com.example.dowitter.Form.WriteForm;
+import com.example.dowitter.form.DocForm;
+import com.example.dowitter.form.ModifyDocForm;
+import com.example.dowitter.form.WriteForm;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.example.dowitter.doc;
 
-import com.example.dowitter.Form.DocForm;
-import com.example.dowitter.Form.ModifyDocForm;
-import com.example.dowitter.Form.WriteForm;
+import com.example.dowitter.form.DocForm;
+import com.example.dowitter.form.ModifyDocForm;
+import com.example.dowitter.form.WriteForm;
 import com.example.dowitter.member.MemberVO;
 import com.example.dowitter.common.constants.SessionConstant;
 import com.example.dowitter.member.MemberService;

@@ -1,8 +1,8 @@
 package com.example.dowitter.member;
 
-import com.example.dowitter.Form.JoinForm;
-import com.example.dowitter.Form.LoginForm;
-import com.example.dowitter.Form.ModifyMemberForm;
+import com.example.dowitter.form.JoinForm;
+import com.example.dowitter.form.LoginForm;
+import com.example.dowitter.form.ModifyMemberForm;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
