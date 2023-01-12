@@ -10,11 +10,34 @@ body {
 	font-family: sans-serif;
 }
 
-body, ul, li, div, a,select,p {
+body, ul, li, div, a ,select ,p, button {
 	margin: 0;
 	padding: 0;
 	text-decoration: none;
 	color: #333333;
+}
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
 }
 li {
 	list-style-type: none;
@@ -201,7 +224,7 @@ textarea{
 	left: calc(50% - 200px);
 }
 .contentBoxLogin{
-	height: 400px;
+	height: 430px;
 	top: calc(40% - 200px);
 }
 .contentLogin{
@@ -253,7 +276,7 @@ textarea{
 	content:"";
 	display: block;
 }
-.btns>div{
+.btns>button{
 	cursor: pointer;
 	display: inline-block;
 	height: 44px;
@@ -262,17 +285,29 @@ textarea{
 	color : #fff;
 	margin-bottom: 10px;
 }
+.btns>div{
+    cursor: pointer;
+    display: inline-block;
+    height: 44px;
+    line-height: 44px;
+    background-color: #aaa;
+    color : #fff;
+    margin-bottom: 10px;
+}
 .btns .confirm{
 	background-color: #37b9fe;
 }
 .btns .cancel{
 	margin-left: 10px;
 }
-.btns.alone>div{
+.btns.alone>button{
 	width: 260px;
 }
-.btns>div{
+.btns>button{
 	width: 120px;
+}
+.btns>div{
+    width: 120px;
 }
 .btns a{
 	display: block;
@@ -296,18 +331,18 @@ textarea{
 	Join	
 */
 .contentBoxJoin{
-	height: 384px;
+	height: 440px;
 	top: calc(40% - 192px);
 }
 .contentJoin{
-	margin: 38px 0;;
+	margin: 50px 0;;
 }
 
 /*
 	modify
 */
 .contentBoxModify{
-	height: 430px;
+	height: 450px;
 	top: calc(40% - 215px);
 }
 .contentModify{
@@ -374,7 +409,7 @@ textarea{
 	border: none;
 	font-size: 18px;
 }
-.writeFeed>div{
+.writeFeed>button{
 	width: 120px;
 	height: 30px;
 	background-color: #37b9fe;	
@@ -511,4 +546,17 @@ textarea{
 	background-color: #ccc;
 	color: #fff;
 	font-size: 16px;
+}
+
+/* Ãß°¡ css */
+.field-error {
+    text-align: center;
+    color: red;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+#idInputReadonly {
+    background-color: #f0f0f0;
 }

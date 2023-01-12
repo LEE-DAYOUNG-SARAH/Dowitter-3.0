@@ -19,7 +19,7 @@
 </header>
 <div id="wrap">
   <div class="contentBox contentBoxModify">
-    <form action="/modifyMember" method="post" th:object="${modifyMemberForm}">
+    <form action="/member/modify" method="post" th:object="${modifyMemberForm}">
       <input type="hidden" th:field="*{uid}"/>
       <div id="content" class="contentModify">
         <div class="title">회원정보 수정</div>
@@ -28,8 +28,8 @@
         </div>
         <div class="row">
           <div class="inputBox">
-            <label for="idInput">ID</label>
-            <input type="text" id="idInput" th:field="*{userId}" title="ID" readonly="readonly"/>
+            <label for="idInputReadonly">ID</label>
+            <input type="text" id="idInputReadonly" th:field="*{userId}" title="ID" readonly="readonly"/>
           </div>
         </div>
         <div class="row">

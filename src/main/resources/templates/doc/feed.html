@@ -63,7 +63,7 @@
     <section id="myFeedBody">
         <div class="myProfile">
             <p class="myProfileId">[[${feedMember.userId}]]님의 피드</p>
-            <a href="/modifyMember" class="myProfileModify" th:if="${feedMember.uid eq loginMember.uid}">
+            <a href="/member/modify" class="myProfileModify" th:if="${feedMember.uid eq loginMember.uid}">
                 회원정보수정
             </a>
         </div>

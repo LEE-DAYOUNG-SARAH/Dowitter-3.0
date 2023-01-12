@@ -28,16 +28,14 @@
         <div class="row">
           <div class="inputBox">
             <label for="idInput">ID</label>
-            <input type="text" id="idInput"th:field="*{userId}"
-                   th:errorclass="field-error" title="ID" />
+            <input type="text" id="idInput"th:field="*{userId}" title="ID" />
             <div class="field-error" th:errors="*{userId}" />
           </div>
         </div>
         <div class="row">
           <div class="inputBox">
             <label for="pwInput">PW</label>
-            <input type="password" id="pwInput" th:field="*{password}"
-                   th:errorclass="field-error" title="PASSWORD"/>
+            <input type="password" id="pwInput" th:field="*{password}" title="PASSWORD"/>
             <div class="field-error" th:errors="*{password}" />
           </div>
         </div>

@@ -129,7 +129,7 @@ public class MemberController {
      * @param session
      * @return 회원정보 수정 화면
      */
-    @GetMapping("/modifyMember")
+    @GetMapping("/member/modify")
     public String modifyMemberForm(@ModelAttribute ModifyMemberForm modifyMemberForm,
                                    HttpSession session) {
         MemberVO memberVO = (MemberVO) session.getAttribute(SessionConstant.LOGIN_MEMBER);
@@ -155,7 +155,7 @@ public class MemberController {
      * @return (회원정보 수정 실패시) 회원정보 수정 화면
      *         (회원정보 수정 성공시) 개인 피드 화면
      */
-    @PostMapping("/modifyMember")
+    @PostMapping("/member/modify")
     public String modifyMember(@Validated @ModelAttribute ModifyMemberForm modifyMemberForm,
                                BindingResult bindingResult,
                                HttpSession session) {
